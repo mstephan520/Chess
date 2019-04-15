@@ -1,9 +1,12 @@
 require_relative 'null_piece'
 require_relative 'piece'
 require "byebug"
+require_relative 'valid_pos'
 
 
 class Board
+    include Valid_pos
+
     attr_reader :board
 
     def initialize
@@ -17,7 +20,7 @@ class Board
         end
 
         @board[2..5].each do |row|
-            row.map! { |square| NullPiece.new }
+            row.map! { |asquare| NullPiece.y }
         end
 
         @board[6..7].each do |row|
@@ -27,18 +30,15 @@ class Board
     end
 
     def move_piece(start_pos, end_pos)
-        raise "That's out of bounds." if start_pos.any? { |a| a < 0 || a > 7 }
-            
-        raise "That's out of bounds." if end_pos.any? { |a| a < 0 || a > 7 }
+        raise "That's out of bounds." unless valid_pos?(start_pos)  
+        raise "That's out of bounds." unless valid_pos?(end_pos)
             
         piece = self[start_pos]
         
-        raise "There's no piece here." if piece.is_a?(NullPiece)
-            
+        raise "There's no piece here." if piece.is_a?(NullPiece)  
         raise "There's already a piece here." unless self[end_pos].is_a?(NullPiece)
 
         self[end_pos], self[start_pos] = piece, NullPiece
-
         
     end
 
@@ -47,18 +47,18 @@ class Board
         @board[row][col]
     end
 
-    def []=(pos, value)
+    def []=(pos, value)2
         row, col = pos
         @board[row][col] = value
     end
 
 end
 
-game1 = Board.new
+# game1 = Board.new
 
-p game1.move_piece([1,0], [3, 0])
-p game1.move_piece([0,0], [4,4])
-p game1.board
+# p game1.move_piece([1,0], [3, 0])
+# p game1.move_piece([0,0], [4,4])
+# p game1.board
 
 
 
