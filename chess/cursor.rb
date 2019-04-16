@@ -32,7 +32,7 @@ MOVES = {
 }
 
 class Cursor
-    include Valid_pos
+  include Valid_pos
 
 
   attr_reader :cursor_pos, :board, :selected

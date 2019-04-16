@@ -17,35 +17,35 @@ class Display
     def render
 
         while true 
-
             @cursor.get_input
-
+            system('clear')
             pos = @cursor.cursor_pos
-
             print_board(pos)
         end
 
     end
 
     def print_board(pos = nil)
-        puts "  1 2 3 4 5 6 7 8"
-        puts "  ----------------"
+        puts "    a   b   c   d   e   f   g   h"
+        puts "   --- --- --- --- --- --- --- ---"
 
         (0..7).each do |row|
             string = ''
             (0..7).each do |col|
                 position = [row, col]
+                
                 if position == pos && @cursor.selected
-                    string += @board[position].name.colorize(:background => :light_green) + '|'
+                    string += @board[position].symbol.to_s.colorize(:background => :light_green) + ' | '
                 elsif position == pos
-                    string += @board[position].name.colorize(:background => :light_red) + '|'
+                    string += @board[position].symbol.to_s.colorize(:background => :light_red) + ' | '
                 else
-                    string += @board[position].name + '|'
+                    string += @board[position].symbol.to_s + ' | '
                 end
             end
-            puts (row + 1).to_s + "|" + string
-            puts "  ----------------"
+            puts (8 - row).to_s + " | " + string + (8 - row).to_s
+            puts "   --- --- --- --- --- --- --- ---"
         end
+        puts "    a   b   c   d   e   f   g   h"
     end
 end
 

@@ -1,9 +1,13 @@
 require_relative 'piece'
-require 'Singleton'
+require 'singleton'
 
 class NullPiece < Piece
-    # include singleton
+    include Singleton
     def initialize
-        @name = 'N'
+        
+    end
+
+    def symbol
+        :"Ø"
     end
 end
